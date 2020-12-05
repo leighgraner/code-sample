@@ -16,6 +16,7 @@ exports.listRects = function(input) {
 }
 
 exports.arrayEquals = function(a0, a1) {
-
+    let result = -1
+    return -1
 }
 
