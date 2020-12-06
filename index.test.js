@@ -1,9 +1,43 @@
 const { test, expect } = require("@jest/globals");
-const ListRects = require('./index')
+const App = require('./index')
 
 const input4 = null
 
 // Run the test cases:
+describe('arrayStrictlyEquals()', () => {
+
+    test ("it should return true if inputs are arrays whose length and elements are strictly equal.", () => {
+        const a = ['a', 'b', 'c']
+        const b = ['a', 'b', 'c']
+
+        const result = App.arrayStrictlyEquals(a, b)
+        expect(result).toBe(true)
+    })
+
+    test ("it should return false if inputs are arrays whose length and elements are only loosely equal.", () => {
+        const a = ['8', 6, 7]
+        const b = [8, 6, 7]
+
+        const result = App.arrayStrictlyEquals(a, b)
+        expect(result).toBe(false)
+    })
+
+    test ("it should return false if one of the inputs is not an array.", () => {
+        const a = 0
+        const b = ['a', 'b', 'c']
+
+        const result = App.arrayStrictlyEquals(a, b)
+        expect(result).toBe(false)
+    })
+
+    test ("it should return true if both inputs are empty arrays.", () => {
+        const a = []
+        const b = []
+
+        const result = App.arrayStrictlyEquals(a, b)
+        expect(result).toBe(true)
+    })
+})
 describe('listRects()', () => {
     test("it should return a list of all rectangles.", () => {
         const input = [
@@ -22,8 +56,8 @@ describe('listRects()', () => {
             [[5, 6], [5, 6]]
         ]
 
-        const result = ListRects.listRects(input)
-        const arrayEquality = ListRects.arrayEquals(input, result)
+        const result = App.listRects(input)
+        const arrayEquality = App.arrayStrictlyEquals(input, result)
         expect(arrayEquality).toBe(true)
     })
     test("it should correctly list when only one rectangle.", () => {
@@ -38,8 +72,8 @@ describe('listRects()', () => {
             [[0, 0], [0, 0]]
         ]
 
-        const result = ListRects.listRects(input)
-        const arrayEquality = ListRects.arrayEquals(input, result)
+        const result = App.listRects(input)
+        const arrayEquality = App.arrayStrictlyEquals(input, result)
         expect(arrayEquality).toBe(true)
     })
     test("it should return an empty array if there are no rectangles.", () => {
@@ -52,8 +86,8 @@ describe('listRects()', () => {
 
         const expected = [[]]
 
-        const result = ListRects.listRects(input)
-        const arrayEquality = ListRects.arrayEquals(input, result)
+        const result = App.listRects(input)
+        const arrayEquality = App.arrayStrictlyEquals(input, result)
         expect(arrayEquality).toBe(true)
 
     })
@@ -63,8 +97,8 @@ describe('listRects()', () => {
         const input = [[]]
         const expected = []
 
-        const result = ListRects.listRects(input)
-        const arrayEquality = ListRects.arrayEquals(input, result)
+        const result = App.listRects(input)
+        const arrayEquality = App.arrayStrictlyEquals(input, result)
         expect(arrayEquality).toBe(true)
     })
 
@@ -72,8 +106,8 @@ describe('listRects()', () => {
         const input = [[], [], []]
         const expected = []
 
-        const result = ListRects.listRects(input)
-        const arrayEquality = ListRects.arrayEquals(input, result)
+        const result = App.listRects(input)
+        const arrayEquality = App.arrayStrictlyEquals(input, result)
         expect(arrayEquality).toBe(true)
     })
 
@@ -81,7 +115,7 @@ describe('listRects()', () => {
         const input = []
         const expected = -1
 
-        const result = ListRects.listRects(input)
+        const result = App.listRects(input)
         expect(result).toBe(-1)
     })
 
@@ -89,7 +123,7 @@ describe('listRects()', () => {
         const input = null
         const expected = -1
 
-        const result = ListRects.listRects(input)
+        const result = App.listRects(input)
         expect(result).toBe(-1)
     })
 
@@ -97,7 +131,7 @@ describe('listRects()', () => {
         const input = 42
         const expected = -1
 
-        const result = ListRects.listRects(input)
+        const result = App.listRects(input)
         expect(result).toBe(-1)
     })
 
@@ -113,7 +147,7 @@ describe('listRects()', () => {
         ]
         const expected = -1
 
-        const result = ListRects.listRects(input)
+        const result = App.listRects(input)
         expect(result).toBe(-1)
     })
 })

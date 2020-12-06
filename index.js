@@ -15,8 +15,25 @@ exports.listRects = function(input) {
     return result
 }
 
-exports.arrayEquals = function(a0, a1) {
-    let result = -1
-    return -1
+exports.arrayStrictlyEquals = function(a, b) {
+
+    if (!(Array.isArray(a) && Array.isArray(b))) { 
+        return false 
+    }
+
+    if (a.length != b.length) {
+        return false
+    }
+
+    if ((a.length == 0) && (b.length == 0)) {
+        return true
+    }
+
+    if (a.every((value, i) => value === b[i]))
+    {
+        return true
+    }
+
+    return false
 }
 
