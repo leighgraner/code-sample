@@ -1,16 +1,20 @@
 // Rectangle Finder
 //
-// This program takes a 2D array of 0s and 1s, and returns an array of
-// the coordinates of the start and end point of each rectangle of 1s.
-//
 // A code sample by Leigh Graner
 //
 // See tests in index.tests.js.
 
+/**
+ * Takes a 2D array of 0s and 1s, and returns an array of coordinates of
+ * the start and end point of each rectangle of 1s.
+ * @param {Array[Array]} input - TODO
+ */
 exports.listRects = function(input) {
 
     standardRowLength = -1
     let result = []
+
+    // Ensure input is valid:
 
     if (!Array.isArray(input)) {
         throw new Error("Input is not an array.")
@@ -21,6 +25,8 @@ exports.listRects = function(input) {
 
     input.forEach(function (row, i) {
 
+        // Ensure row is valid:
+
         if (!Array.isArray(row)) { throw new Error("Value is not an array: " + row)}
 
         if (standardRowLength < 0) {
@@ -29,6 +35,8 @@ exports.listRects = function(input) {
         else if (row.length !== standardRowLength) {
             throw new Error("Rows are not the same length.")
         }
+
+        // Process each value in row:
 
         input[i].forEach(function (val, j) { 
             if (val === 1) {
@@ -46,6 +54,12 @@ exports.listRects = function(input) {
     
 }
 
+/**
+ * Takes two arrays, and returns whether they are the same length and
+ * their elements, in order, are strictly equal between the two arrays.
+ * @param {Array} a 
+ * @param {Array} b 
+ */
 exports.arrayStrictlyEquals = function(a, b) {
 
     if (!(Array.isArray(a) && Array.isArray(b))) { 
