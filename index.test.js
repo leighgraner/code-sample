@@ -91,6 +91,36 @@ describe('listRects()', () => {
         expect(arrayEquality).toBe(true)
 
     })
+
+    test("it should work correctly for a single rectangle in a 1x1 grid.", () => {
+        const input =
+            [
+                [1]
+            ]
+
+        const expected = [
+            [[0,0], [0,0]]
+        ]
+
+        const result = App.listRects(input)
+        const arrayEquality = App.arrayStrictlyEquals(input, result)
+        expect(arrayEquality).toBe(true)
+
+    })
+
+    test("it should work correctly for a single 0 in a 1x1 grid.", () => {
+        const input =
+            [
+                [0]
+            ]
+
+        const expected = []
+
+        const result = App.listRects(input)
+        const arrayEquality = App.arrayStrictlyEquals(input, result)
+        expect(arrayEquality).toBe(true)
+
+    })
     
 
     test("it should return an empty array if only row in input is empty.", () => {
@@ -119,23 +149,41 @@ describe('listRects()', () => {
         expect(result).toBe(-1)
     })
 
-    test("it should return -1 if input is null", () => {
+    test("it should throw an error if there are values other than 0 or 1.", () => {
+        const input =
+            [
+                [0, 0, 0],
+                [0, 'b', 0],
+                [0, 0, 0]
+            ]
+
+        const t = () => {
+            return App.listRects(input)
+        }
+        expect(t).toThrow(Error)
+    })
+
+    test("it should throw an error if input is null", () => {
         const input = null
         const expected = -1
 
-        const result = App.listRects(input)
-        expect(result).toBe(-1)
+        const t = () => {
+            return App.listRects(input)
+        }
+        expect(t).toThrow(Error)
     })
 
-    test("it should return -1 if input is not an array", () => {
+    test("it should throw an error if input is not an array", () => {
         const input = 42
         const expected = -1
 
-        const result = App.listRects(input)
-        expect(result).toBe(-1)
+        const t = () => {
+            return App.listRects(input)
+        }
+        expect(t).toThrow(Error)
     })
 
-    test("it should return -1 if input rows are not the same length.", () => {
+    test("it should throw an error if input rows are not the same length.", () => {
         const input = [
             [0, 0, 0, 0, 0, 0, 0, 1, 1],
             [0, 0, 0, 1, 1, 0, 0, 1, 1],
@@ -147,7 +195,9 @@ describe('listRects()', () => {
         ]
         const expected = -1
 
-        const result = App.listRects(input)
-        expect(result).toBe(-1)
+        const t = () => {
+            return App.listRects(input)
+        }
+        expect(t).toThrow(Error)
     })
 })

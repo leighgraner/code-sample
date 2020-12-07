@@ -9,10 +9,24 @@
 
 exports.listRects = function(input) {
 
-    //todo: check input formatting, etc -LG
+    if (!Array.isArray(input)) {
+        throw new Error("Input is not an array: " + input)
+    }
 
-    let result = -1
-    return result
+    input.forEach(function (row, i) {
+        input[i].forEach(function (val, j) { 
+            if (val === 1) {
+
+            } else if (val === 0) {
+
+            }
+            else {
+                throw new Error("Unexpected value found: " + val)
+            }
+        })
+    })
+
+    
 }
 
 exports.arrayStrictlyEquals = function(a, b) {
