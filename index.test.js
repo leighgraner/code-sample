@@ -1,3 +1,5 @@
+// todo: address why I'm not DRYing this test code -LG
+
 const { test, expect } = require("@jest/globals");
 const App = require('./index')
 
@@ -57,7 +59,7 @@ describe('listRects()', () => {
         ]
 
         const result = App.listRects(input)
-        const arrayEquality = App.arrayStrictlyEquals(input, result)
+        const arrayEquality = App.arrayStrictlyEquals(expected, result)
         expect(arrayEquality).toBe(true)
     })
     test("it should correctly list when only one rectangle.", () => {
@@ -73,7 +75,7 @@ describe('listRects()', () => {
         ]
 
         const result = App.listRects(input)
-        const arrayEquality = App.arrayStrictlyEquals(input, result)
+        const arrayEquality = App.arrayStrictlyEquals(expected, result)
         expect(arrayEquality).toBe(true)
     })
     test("it should return an empty array if there are no rectangles.", () => {
@@ -87,7 +89,7 @@ describe('listRects()', () => {
         const expected = [[]]
 
         const result = App.listRects(input)
-        const arrayEquality = App.arrayStrictlyEquals(input, result)
+        const arrayEquality = App.arrayStrictlyEquals(expected, result)
         expect(arrayEquality).toBe(true)
 
     })
@@ -103,7 +105,7 @@ describe('listRects()', () => {
         ]
 
         const result = App.listRects(input)
-        const arrayEquality = App.arrayStrictlyEquals(input, result)
+        const arrayEquality = App.arrayStrictlyEquals(expected, result)
         expect(arrayEquality).toBe(true)
 
     })
@@ -117,7 +119,7 @@ describe('listRects()', () => {
         const expected = []
 
         const result = App.listRects(input)
-        const arrayEquality = App.arrayStrictlyEquals(input, result)
+        const arrayEquality = App.arrayStrictlyEquals(expected, result)
         expect(arrayEquality).toBe(true)
 
     })
@@ -128,7 +130,7 @@ describe('listRects()', () => {
         const expected = []
 
         const result = App.listRects(input)
-        const arrayEquality = App.arrayStrictlyEquals(input, result)
+        const arrayEquality = App.arrayStrictlyEquals(expected, result)
         expect(arrayEquality).toBe(true)
     })
 
@@ -137,16 +139,18 @@ describe('listRects()', () => {
         const expected = []
 
         const result = App.listRects(input)
-        const arrayEquality = App.arrayStrictlyEquals(input, result)
+        const arrayEquality = App.arrayStrictlyEquals(expected, result)
         expect(arrayEquality).toBe(true)
     })
 
-    test("it should return -1 if there are no rows in input.", () => {
+    test("it should throw an error if input is an empty array.", () => {
         const input = []
         const expected = -1
 
-        const result = App.listRects(input)
-        expect(result).toBe(-1)
+        const t = () => {
+            return App.listRects(input)
+        }
+        expect(t).toThrow(Error)
     })
 
     test("it should throw an error if there are values other than 0 or 1.", () => {
