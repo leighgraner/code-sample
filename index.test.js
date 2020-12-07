@@ -3,9 +3,6 @@
 const { test, expect } = require("@jest/globals");
 const App = require('./index')
 
-const input4 = null
-
-// Run the test cases:
 describe('arrayStrictlyEquals()', () => {
 
     test ("it should return true if inputs are arrays whose length and elements are strictly equal.", () => {
