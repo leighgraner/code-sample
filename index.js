@@ -44,11 +44,9 @@ exports.listRects = function (input) {
         input[i].forEach(function (val, j) {
             if (val === 1) {
 
-                // todo: is maybe-do a good pattern?
-                // todo: Do I want to pass the list in?
-
                 let adjacentRectangle = findFirstAdjacentRectangle(i, j, rects)
                 if (adjacentRectangle != null) {
+
                     // Grow the rectangle to include the new point.
                     if (i < adjacentRectangle[0][0]) {
                         adjacentRectangle[0][0] = i
@@ -88,6 +86,10 @@ exports.listRects = function (input) {
  */
 function findFirstAdjacentRectangle(i, j, rects) {
 
+    if (!Array.isArray(rects)) {
+        throw new Error("Input 'rects' is not an array.")
+    }
+
     for (let iter = 0; iter < rects.length; iter++) {
         let rect = rects[iter]
 
@@ -105,32 +107,3 @@ function findFirstAdjacentRectangle(i, j, rects) {
     }
     return null
 }
-
-
-/**
- * Takes two arrays, and returns whether they are the same length and
- * their elements, in order, are strictly equal between the two arrays.
- * @param {Array} a 
- * @param {Array} b 
- */
-exports.arrayStrictlyEquals = function (a, b) {
-
-    if (!(Array.isArray(a) && Array.isArray(b))) {
-        return false
-    }
-
-    if (a.length != b.length) {
-        return false
-    }
-
-    if ((a.length == 0) && (b.length == 0)) {
-        return true
-    }
-
-    if (a.every((value, i) => value === b[i])) {
-        return true
-    }
-
-    return false
-}
-

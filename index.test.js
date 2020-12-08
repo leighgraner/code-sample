@@ -4,69 +4,40 @@ const { test, expect } = require("@jest/globals");
 const App = require('./index')
 
 describe('findFirstAdjacentRectangle', () => {
-    const f = App.__get__('findFirstAdjacentRectangle')
+    const findFirstAdjacentRectangle = App.__get__('findFirstAdjacentRectangle')
 
     test("it should return a rectangle containing the point", () => {
-        const result = f(4, 4, [[[0,0],[5,5]]])
-        expect(result).toStrictEqual([[0,0],[5,5]])
+        const result = findFirstAdjacentRectangle(4, 4, [[[0, 0], [5, 5]]])
+        expect(result).toStrictEqual([[0, 0], [5, 5]])
     })
     test("it should return the first adjacent rectangle", () => {
         const rects = [
-            [[0,0],[3,4]],
-            [[4,5],[8,8]]
+            [[0, 0], [3, 4]],
+            [[4, 5], [8, 8]]
         ]
-        const result = f(4, 4, rects)
-        expect(result).toStrictEqual([[0,0],[3,4]])
+        const result = findFirstAdjacentRectangle(4, 4, rects)
+        expect(result).toStrictEqual([[0, 0], [3, 4]])
     })
     test("it should return null if no adjacent rectangle", () => {
         const rects = [
-            [[0,0],[1,1]],
-            [[7,10],[8,12]]
+            [[0, 0], [1, 1]],
+            [[7, 10], [8, 12]]
         ]
-        const result = f(2, 4, rects)
+        const result = findFirstAdjacentRectangle(2, 4, rects)
         expect(result).toBe(null)
     })
-})
-describe('arrayStrictlyEquals()', () => {
-
-    test ("it should return true if inputs are arrays whose " +
-    "length and elements are strictly equal.", () => {
-        const a = ['a', 'b', 'c']
-        const b = ['a', 'b', 'c']
-
-        const result = App.arrayStrictlyEquals(a, b)
-        expect(result).toBe(true)
-    })
-
-    test ("it should return false if inputs are arrays whose " +
-    "length and elements are only loosely equal.", () => {
-        const a = ['8', 6, 7]
-        const b = [8, 6, 7]
-
-        const result = App.arrayStrictlyEquals(a, b)
-        expect(result).toBe(false)
-    })
-
-    test ("it should return false if one of the inputs is not " +
-    "an array.", () => {
-        const a = 0
-        const b = ['a', 'b', 'c']
-
-        const result = App.arrayStrictlyEquals(a, b)
-        expect(result).toBe(false)
-    })
-
-    test ("it should return true if both inputs are empty arrays.", () => {
-        const a = []
-        const b = []
-
-        const result = App.arrayStrictlyEquals(a, b)
-        expect(result).toBe(true)
+    test("it should throw an error if 'rects' is not an array", () => {
+        const rects = 123
+        const t = () => {
+            return findFirstAdjacentRectangle(2, 4, rects)
+        }
+        expect(t).toThrow(Error)
     })
 })
+
 describe('listRects()', () => {
     test("it should return a list of all rectangles.", () => {
-        const input = [
+        const input0 = [
             [0, 0, 0, 0, 0, 0, 0, 1, 1],
             [0, 0, 0, 1, 1, 0, 0, 1, 1],
             [0, 0, 0, 1, 1, 0, 0, 0, 0],
@@ -75,16 +46,31 @@ describe('listRects()', () => {
             [0, 0, 0, 0, 0, 0, 1, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0]
         ]
-        const expected = [
+        const expected0 = [
             [[0, 7], [1, 8]],
             [[1, 3], [3, 4]],
             [[4, 0], [4, 2]],
             [[5, 6], [5, 6]]
         ]
 
-        const result = App.listRects(input)
-        const arrayEquality = App.arrayStrictlyEquals(expected, result)
-        expect(arrayEquality).toBe(true)
+        const result0 = App.listRects(input0)
+        expect(result0).toStrictEqual(expected0)
+
+        const input1 = [
+            [0, 1, 0],
+            [0, 1, 0],
+            [0, 0, 1],
+            [1, 1, 0],
+            [1, 1, 0]
+        ]
+        const expected1 = [
+            [[0, 1], [1, 1]],
+            [[2, 2], [2, 2]],
+            [[3, 0], [4, 1]]
+        ]
+
+        const result1 = App.listRects(input1)
+        expect(result1).toStrictEqual(expected1)
     })
     test("it should correctly list when only one rectangle.", () => {
         const input =
@@ -99,8 +85,7 @@ describe('listRects()', () => {
         ]
 
         const result = App.listRects(input)
-        const arrayEquality = App.arrayStrictlyEquals(expected, result)
-        expect(arrayEquality).toBe(true)
+        expect(result).toStrictEqual(expected)
     })
     test("it should return an empty array if there are no rectangles.", () => {
         const input =
@@ -110,11 +95,10 @@ describe('listRects()', () => {
                 [0, 0, 0]
             ]
 
-        const expected = [[]]
+        const expected = []
 
         const result = App.listRects(input)
-        const arrayEquality = App.arrayStrictlyEquals(expected, result)
-        expect(arrayEquality).toBe(true)
+        expect(result).toStrictEqual(expected)
 
     })
 
@@ -125,12 +109,11 @@ describe('listRects()', () => {
             ]
 
         const expected = [
-            [[0,0], [0,0]]
+            [[0, 0], [0, 0]]
         ]
 
         const result = App.listRects(input)
-        const arrayEquality = App.arrayStrictlyEquals(expected, result)
-        expect(arrayEquality).toBe(true)
+        expect(result).toStrictEqual(expected)
 
     })
 
@@ -143,19 +126,17 @@ describe('listRects()', () => {
         const expected = []
 
         const result = App.listRects(input)
-        const arrayEquality = App.arrayStrictlyEquals(expected, result)
-        expect(arrayEquality).toBe(true)
+        expect(result).toStrictEqual(expected)
 
     })
-    
+
 
     test("it should return an empty array if only row in input is empty.", () => {
         const input = [[]]
         const expected = []
 
         const result = App.listRects(input)
-        const arrayEquality = App.arrayStrictlyEquals(expected, result)
-        expect(arrayEquality).toBe(true)
+        expect(result).toStrictEqual(expected)
     })
 
     test("it should return an empty array if all rows in input are empty.", () => {
@@ -163,8 +144,7 @@ describe('listRects()', () => {
         const expected = []
 
         const result = App.listRects(input)
-        const arrayEquality = App.arrayStrictlyEquals(expected, result)
-        expect(arrayEquality).toBe(true)
+        expect(result).toStrictEqual(expected)
     })
 
     test("it should throw an error if input is an empty array.", () => {
