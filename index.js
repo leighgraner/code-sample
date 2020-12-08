@@ -70,13 +70,13 @@ exports.listRects = function (input) {
                     rects.push([[i, j], [i, j]])
                 }
             }
-            else if (value !== 0) {
+            else if (val !== 0) {
                 throw new Error("Unexpected value found: " + val)
             }
         })
     })
 
-    return result
+    return rects
 
 }
 
