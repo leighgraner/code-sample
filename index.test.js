@@ -1,5 +1,3 @@
-// todo: address why I'm not DRYing this test code -LG
-
 const { test, expect } = require("@jest/globals");
 const App = require('./index')
 
