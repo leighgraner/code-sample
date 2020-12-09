@@ -25,11 +25,14 @@ exports.listRects = function (input) {
         throw new Error("Input is not an array of arrays.")
     }
 
-    input.forEach(function (row, i) {
+    for (let i=0; i<input.length; i++) {
+        const row = input[i]
 
         // Ensure row is valid:
 
-        if (!Array.isArray(row)) { throw new Error("Value is not an array: " + row) }
+        if (!Array.isArray(row)) { 
+            throw new Error("Value is not an array: " + row) 
+        }
 
         if (standardRowLength < 0) {
             standardRowLength = row.length
@@ -40,26 +43,31 @@ exports.listRects = function (input) {
 
         // Process each value in row:
 
-        input[i].forEach(function (val, j) {
+        for (let j=0; j<row.length; j++) {
+            const val = row[j]
             if (val === 1) {
 
-                let adjacentRectangle = findFirstAdjacentRectangle(i, j, rects)
-                if (adjacentRectangle != null) {
+                let adjRect = findFirstAdjacentRectangle(i, j, rects)
+                if (adjRect != null) {
 
                     // Grow the rectangle to include the new point.
-                    if (i < adjacentRectangle[0][0]) {
-                        adjacentRectangle[0][0] = i
+                    if (i < adjRect[0][0]) {
+                        adjRect[0][0] = i
                     }
-                    else if (i > adjacentRectangle[1][0]) {
-                        adjacentRectangle[1][0] = i
+                    else if (i > adjRect[1][0]) {
+                        adjRect[1][0] = i
                     }
 
-                    if (j < adjacentRectangle[0][1]) {
-                        adjacentRectangle[0][1] = j
+                    if (j < adjRect[0][1]) {
+                        adjRect[0][1] = j
                     }
-                    else if (j > adjacentRectangle[1][1]) {
-                        adjacentRectangle[1][1] = j
+                    else if (j > adjRect[1][1]) {
+                        adjRect[1][1] = j
                     }
+
+                    // Skip our iteration within this row to
+                    // the end of this rectangle.
+                    j = adjRect[1][1]
                 }
                 else {
                     // add a new 1x1 rectangle
@@ -69,11 +77,10 @@ exports.listRects = function (input) {
             else if (val !== 0) {
                 throw new Error("Unexpected value found: " + val)
             }
-        })
-    })
+        }
+    }
 
     return rects
-
 }
 
 /**
